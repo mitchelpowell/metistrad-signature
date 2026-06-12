@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Install Metistrad Signature</title>
+<style>
+  body { font-family: -apple-system, Helvetica, Arial, sans-serif; margin: 0; padding: 20px; background: #F6F8FB; color: #1A2233; }
+  .card { background: #fff; border-radius: 14px; padding: 18px; margin-bottom: 18px; box-shadow: 0 1px 4px rgba(22,36,63,.08); }
+  h1 { font-size: 20px; color: #385E9D; margin: 0 0 4px; }
+  p { font-size: 15px; line-height: 1.45; margin: 8px 0; }
+  ol { font-size: 15px; line-height: 1.6; padding-left: 22px; margin: 8px 0; }
+  #copybtn { display: block; width: 100%; padding: 16px; font-size: 18px; font-weight: bold; color: #fff;
+             background: #385E9D; border: none; border-radius: 12px; }
+  #copybtn:active { background: #2C4A7D; }
+  #status { text-align: center; font-size: 15px; font-weight: 600; min-height: 22px; margin-top: 10px; }
+  .ok { color: #2E7D5B; } .err { color: #C0392B; }
+  .sigwrap { overflow-x: auto; }
+</style>
+</head>
+<body>
+
+<h1>Metistrad email signature</h1>
+<p>One-tap installer for iPhone.</p>
+
+<div class="card">
+  <button id="copybtn">Copy signature</button>
+  <div id="status"></div>
+</div>
+
+<div class="card">
+  <ol>
+    <li>Tap <b>Copy signature</b> above</li>
+    <li>Open <b>Settings &rarr; Apps &rarr; Mail &rarr; Signature</b></li>
+    <li>In the account you send from: long-press &rarr; <b>Select All</b> &rarr; delete, then long-press &rarr; <b>Paste</b></li>
+    <li>Make sure <b>Load Remote Images</b> is ON (back in Mail settings)</li>
+    <li>Force-quit Mail, reopen, compose a test email</li>
+  </ol>
+</div>
+
+<div class="card sigwrap" id="sig">
+<table cellpadding="0" cellspacing="0" border="0" width="330" style="width:330px;">
+  <tr>
+    <td width="155" valign="top" style="width:155px;vertical-align:top;">
+      <img src="https://mitchelpowell.github.io/metistrad-signature/name_card_v3.png" width="155" height="52" border="0" style="display:block;border:0;">
+    </td>
+    <td width="2" valign="top" style="width:2px;vertical-align:top;">
+      <img src="https://mitchelpowell.github.io/metistrad-signature/divider_v1.png" width="2" height="52" border="0" style="display:block;border:0;">
+    </td>
+    <td width="173" valign="top" style="width:173px;vertical-align:top;">
+      <a href="tel:+447706627077" style="display:block;text-decoration:none;border:0;line-height:0;">
+        <img src="https://mitchelpowell.github.io/metistrad-signature/phone_row_v3.png" width="165" height="26" border="0" style="display:block;border:0;">
+      </a>
+      <a href="https://metistrad.co.uk" style="display:block;text-decoration:none;border:0;line-height:0;">
+        <img src="https://mitchelpowell.github.io/metistrad-signature/web_row_v3.png" width="165" height="26" border="0" style="display:block;border:0;">
+      </a>
+    </td>
+  </tr>
+</table>
+
+<hr style="border:none;border-top:2px solid #385E9D;margin:8px 0;width:330px;">
+
+<table cellpadding="0" cellspacing="0" border="0" width="330" style="width:330px;">
+  <tr>
+    <td width="175" valign="middle" style="width:175px;vertical-align:middle;">
+      <a href="https://metistrad.co.uk" style="text-decoration:none;display:block;border:0;">
+        <img src="https://mitchelpowell.github.io/metistrad-signature/logo_v1.png" alt="Metistrad" width="175" height="68" border="0" style="display:block;border:0;">
+      </a>
+    </td>
+    <td width="155" align="right" valign="middle" style="width:155px;text-align:right;vertical-align:middle;">
+      <a href="https://www.linkedin.com/in/mitchelpowell/" style="text-decoration:none;display:inline-block;">
+        <img src="https://mitchelpowell.github.io/metistrad-signature/icon_li_v1.png" alt="LinkedIn" width="26" height="26" border="0" style="border:0;">
+      </a>
+    </td>
+  </tr>
+</table>
+
+<hr style="border:none;border-top:2px solid #385E9D;margin:8px 0;width:330px;">
+
+<img src="https://mitchelpowell.github.io/metistrad-signature/carousel_v1.gif" alt="Do Great Work. Really Care. Have Integrity." width="330" height="90" border="0" style="display:block;border:0;">
+
+
+
+</div>
+
+<script>
+document.getElementById('copybtn').addEventListener('click', function () {
+  var html = document.getElementById('sig').innerHTML;
+  var status = document.getElementById('status');
+  function fallback() {
+    var range = document.createRange();
+    range.selectNodeContents(document.getElementById('sig'));
+    var sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+    var ok = document.execCommand('copy');
+    sel.removeAllRanges();
+    status.textContent = ok ? 'Copied! Now paste it in Settings.' : 'Copy failed — long-press the signature below instead.';
+    status.className = ok ? 'ok' : 'err';
+  }
+  if (navigator.clipboard && window.ClipboardItem) {
+    navigator.clipboard.write([new ClipboardItem({
+      'text/html': new Blob([html], { type: 'text/html' }),
+      'text/plain': new Blob(['Mitch Powell | Founder | Metistrad Ltd | 07706 627 077 | metistrad.co.uk'], { type: 'text/plain' })
+    })]).then(function () {
+      status.textContent = 'Copied! Now paste it in Settings.';
+      status.className = 'ok';
+    }, fallback);
+  } else { fallback(); }
+});
+</script>
+
+</body>
+</html>
